@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>乱序排列</title>
+    <style>
+      ol li {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 2px solid #a4ce49;
+        margin-right: 2px;
+        background-color: #00acec;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div>原始排名</div>
+    <ol class="namelist"></ol>
+    <div>乱序排名</div>
+    <ol class="newnamelist"></ol>
+    <script>
+      const namelist = document.querySelector(".namelist");
+
+      fetch("./data/data.json")
+        .then(function (response) {
+          console.log(response);
+          return response.json();
+        })
+        .then(function (myJson) {
+          for (let i = 0; i < myJson.length; i++) {
+            const liitem = document.createElement("li");
+            liitem.innerHTML = `名次:<span>${i+1}</span>   id:<span>${myJson[i].id}</span>.
+                    <span>${myJson[i].name}</span>
+                    `;
+            namelist.appendChild(liitem);
+          }
+          const newNamelist = shuffle(myJson);
+          for (let i = 0; i < newNamelist.length; i++) {
+            const newnameList = document.querySelector(".newnamelist");
+            const liitem = document.createElement("li");
+            liitem.innerHTML = `名次:<span>${i+1}</span>   id:<span>${newNamelist[i].id}</span>.
+                    <span>${newNamelist[i].name}</span>
+                    `;
+            newnameList.appendChild(liitem);
+          }
+          console.log(myJson);
+        });
+
+      function shuffle(arr) {
+        if (!Array.isArray(arr) && arr.length) {
+          return [];
+        }
+        for (let i = arr.length; i > 0; i--) {
+          const index = Math.floor(Math.random() * i);
+          if (index !== i - 1) {
+            const tmp = arr[index];
+            arr[index] = arr[i - 1];
+            arr[i - 1] = tmp;
+          }
+        }
+        return arr;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>乱序排列</title>
+    <style>
+      body{
+        width: 100%;
+      }
+      .warp{
+        margin: 0 auto;
+        width: 500px;
+        min-width: 735px;
+
+      }
+      ol li {
+        /* display: inline-block; */
+        width: 200px;
+        padding: 5px 10px;
+        border: 2px solid #a4ce49;
+        margin-bottom: 2px;
+        background-color: #00acec;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0px 0px 5px rgb(214, 203, 203);
+      }
+      button {
+        margin-top: 20px ;
+        border: 1px solid #f5a623;
+        background-color: #f5a623;
+        border-radius: 30px;
+        width: 134px;
+        box-shadow: 0px 0px 10px rgb(214, 203, 203);
+        transition: 0.8s;
+        font: 24px/36px bold;
+        color: white;
+      }
+      button:hover {
+        background-color: #e33e33;
+        box-shadow: 0px 5px 10px rgb(214, 203, 203);
+      }
+      button:focus {
+        outline: 0;
+      }
+      button:active{
+        transition: 0.9s;
+        background-color: #e33e33;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="warp">
+    <div style="width: 300px; float: left">
+      <div style="text-align: center;">原始排名</div> 
+      <ol class="namelist"></ol>
+    </div>
+    <div style="width: 300px; float: left">
+      <div  style="text-align: center;">中签排名</div> 
+      <ol class="newnamelist"></ol>
+    </div>
+    <button class="check">抽签</button>
+  </div>
+    <script>
+      const namelistdata = [
+        {
+          name: "Ellen",
+          id: 1,
+        },
+        {
+          name: "Sara",
+          id: 2,
+        },
+        {
+          name: "Catty",
+          id: 3,
+        },
+        {
+          name: "Lya",
+          id: 4,
+        },
+        {
+          name: "flora",
+          id: 5,
+        },
+        {
+          name: "Alice",
+          id: 6,
+        },
+        {
+          name: "Belle",
+          id: 7,
+        },
+        {
+          name: "Cytheria",
+          id: 8,
+        },
+        {
+          name: "Elina",
+          id: 9,
+        },
+        {
+          name: "Gita",
+          id: 5,
+        },
+        {
+          name: "Hana",
+          id: 10,
+        },
+        {
+          name: "Kiona",
+          id: 11,
+        },
+        {
+          name: "Lida",
+          id: 12,
+        },
+        {
+          name: "Rose",
+          id: 13,
+        },
+        {
+          name: "Shaine",
+          id: 14,
+        },
+      ];
+      const btn = document.querySelector(".check");
+      const namelist = document.querySelector(".namelist");
+      const sortnamelist = document.querySelector(".newnamelist");
+      sortNamelist(namelistdata);
+      function sortNamelist(myJson) {
+        for (let i = 0; i < myJson.length; i++) {
+          const liitem = document.createElement("li");
+          const liitemOri = document.createElement("li");
+          liitem.innerHTML = `id:<span>${myJson[i].id}</span>.
+                    <span>${myJson[i].name}</span>
+                    `;
+          sortnamelist.appendChild(liitemOri);
+          namelist.appendChild(liitem);
+        }
+      }
+      
+      btn.onclick = function(){
+        const newNamedata = shuffle(namelistdata);
+        sortnamelist.innerHTML = ""
+        for (let i = 0; i < newNamedata.length; i++) {
+          const liitem = document.createElement("li");
+          liitem.innerHTML = `名次:<span>${i + 1}</span>   id:<span>${
+            newNamedata[i].id
+          }</span>.
+          <span>${newNamedata[i].name}</span>
+                    `;
+          sortnamelist.appendChild(liitem);
+        }
+      }
+      function shuffle(arr) {
+        if (!Array.isArray(arr) && arr.length) {
+          return [];
+        }
+        for (let i = arr.length; i > 0; i--) {
+          const index = Math.floor(Math.random() * i);
+          if (index !== i - 1) {
+            const tmp = arr[index];
+            arr[index] = arr[i - 1];
+            arr[i - 1] = tmp;
+          }
+        }
+        return arr;
+      }
+    </script>
+  </body>
+</html>
